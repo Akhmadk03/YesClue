@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Renderer2, ElementRef } from '@angular/core';
 
 @Component({
   selector: 'app-login-signup',
@@ -7,25 +7,24 @@ import { Component, OnInit } from '@angular/core';
 })
 export class LoginSignupComponent implements OnInit {
 
-  constructor() { }
+  constructor(private renderer: Renderer2, private el: ElementRef) { }
 
   ngOnInit(): void {
-    const signUpButton = document.getElementById('signUp');
-    const signInButton = document.getElementById('signIn');
-    const container = document.querySelector('.container') as HTMLElement;
-    const signUpForm = document.querySelector('.sign-up-container form') as HTMLElement;
-    const emailContainer = document.querySelector('.email-container') as HTMLElement;
-    const signUpBtn = document.querySelector('.sign-up-btn') as HTMLElement;
+    const signUpButton = this.el.nativeElement.querySelector('#signUp');
+    const signInButton = this.el.nativeElement.querySelector('#signIn');
+    const container = this.el.nativeElement.querySelector('.container');
+    const emailContainer = this.el.nativeElement.querySelector('.email-container');
+    const signUpBtn = this.el.nativeElement.querySelector('.sign-up-btn');
 
-    signUpButton?.addEventListener('click', () => {
-      container.classList.add('right-panel-active');
-      emailContainer.style.display = 'block';
+    this.renderer.listen(signUpButton, 'click', () => {
+      this.renderer.addClass(container, 'right-panel-active');
+      this.renderer.setStyle(emailContainer, 'display', 'block');
       signUpBtn.innerHTML = 'Create Account';
     });
 
-    signInButton?.addEventListener('click', () => {
-      container.classList.remove('right-panel-active');
-      emailContainer.style.display = 'none';
+    this.renderer.listen(signInButton, 'click', () => {
+      this.renderer.removeClass(container, 'right-panel-active');
+      this.renderer.setStyle(emailContainer, 'display', 'none');
       signUpBtn.innerHTML = 'Sign in';
     });
   }
