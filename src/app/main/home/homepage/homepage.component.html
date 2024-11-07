@@ -2,7 +2,6 @@
   <div class="sidebar">
     <ul id="projectList">
       <li><strong>My Projects</strong></li>
-      <!-- New projects will be added here dynamically -->
       <li *ngFor="let project of projects" (click)="displayProjectDetails(project)">
         {{ project.name }}
       </li>
@@ -14,26 +13,40 @@
     </div>
     <button id="addProjectBtn" (click)="openAddProjectModal()">Add Project</button>
   </div>
-  <div class="content" id="projectDetails">
+  
+  <div class="content" id="projectDetails" *ngIf="selectedProject">
     <h2 id="projectTitle">{{ selectedProject?.name || 'Project Title' }}</h2>
     <p><strong>Date:</strong> <span id="projectDateDetails">{{ selectedProject?.date }}</span></p>
     <p><strong>Description:</strong></p>
     <p id="projectDescriptionDetails">{{ selectedProject?.description }}</p>
+    
+    <!-- Comment Section -->
+    <div class="comment-section">
+      <h3>Comments</h3>
+      <textarea [(ngModel)]="newComment" placeholder="Add your comment..." rows="4" cols="50"></textarea>
+      <button (click)="addComment()">Add Comment</button>
+    </div>
+    
+    <div *ngIf="selectedProject?.comments?.length">
+      <h4>Previous Comments</h4>
+      <ul>
+        <li *ngFor="let comment of selectedProject.comments">{{ comment }}</li>
+      </ul>
+    </div>
   </div>
 
   <!-- Modal -->
-<!-- Modal -->
-<div class="modal" *ngIf="isModalOpen" (click)="closeModal($event)">
-  <div class="modal-content" (click)="$event.stopPropagation()">
-    <h3>Add New Project</h3>
-    <label for="projectName">Project Name:</label>
-    <input type="text" [(ngModel)]="newProjectName" id="projectName" />
-    <label for="projectDate">Date:</label>
-    <input type="date" [(ngModel)]="newProjectDate" id="projectDate" />
-    <label for="projectDescription">Description:</label>
-    <textarea [(ngModel)]="newProjectDescription" id="projectDescription"></textarea>
-    <button (click)="saveProject()">Save Project</button>
-    <button (click)="closeModal($event)">Cancel</button>
+  <div class="modal" *ngIf="isModalOpen" (click)="closeModal($event)">
+    <div class="modal-content" (click)="$event.stopPropagation()">
+      <h3>Add New Project</h3>
+      <label for="projectName">Project Name:</label>
+      <input type="text" [(ngModel)]="newProjectName" id="projectName" />
+      <label for="projectDate">Date:</label>
+      <input type="date" [(ngModel)]="newProjectDate" id="projectDate" />
+      <label for="projectDescription">Description:</label>
+      <textarea [(ngModel)]="newProjectDescription" id="projectDescription"></textarea>
+      <button (click)="saveProject()">Save Project</button>
+      <button (click)="closeModal($event)">Cancel</button>
+    </div>
   </div>
 </div>
-
