@@ -2,23 +2,39 @@
   <div class="sidebar">
     <ul id="projectList">
       <li><strong>My Projects</strong></li>
-      <li *ngFor="let project of projects" (click)="displayProjectDetails(project)">
+      <li *ngFor="let project of projects" (click)="selectProject(project)">
         {{ project.name }}
       </li>
     </ul>
   </div>
   <div class="topbar">
     <div class="search-bar">
-      <input type="text" id="searchInput" placeholder="Search Projects..." (input)="filterProjects()">
+      <input type="text" id="searchInput" placeholder="Search Projects..." [(ngModel)]="searchTerm">
     </div>
     <button id="addProjectBtn" (click)="openAddProjectModal()">Add Project</button>
   </div>
   
-  <div class="content" id="projectDetails" *ngIf="selectedProject">
-    <h2 id="projectTitle">{{ selectedProject?.name || 'Project Title' }}</h2>
-    <p><strong>Date:</strong> <span id="projectDateDetails">{{ selectedProject?.date }}</span></p>
-    <p><strong>Description:</strong></p>
-    <p id="projectDescriptionDetails">{{ selectedProject?.description }}</p>
+  <!-- Project details content -->
+  <div class="content" *ngIf="selectedProject">
+    <h2>{{ selectedProject.name }}</h2>
+    <p><strong>Date:</strong> {{ selectedProject.date }}</p>
+    <p><strong>Description:</strong> {{ selectedProject.description }}</p>
+    
+    <!-- Display uploaded files -->
+    <div *ngIf="selectedProject.files && selectedProject.files.length">
+      <h4>Files</h4>
+      <ul>
+        <li *ngFor="let file of selectedProject.files">{{ file.name }}</li>
+      </ul>
+    </div>
+    
+    <!-- Display uploaded images -->
+    <div *ngIf="selectedProject.images && selectedProject.images.length">
+      <h4>Images</h4>
+      <ul>
+        <li *ngFor="let image of selectedProject.images">{{ image.name }}</li>
+      </ul>
+    </div>
     
     <!-- Comment Section -->
     <div class="comment-section">
@@ -27,7 +43,8 @@
       <button (click)="addComment()">Add Comment</button>
     </div>
     
-    <div *ngIf="selectedProject?.comments?.length">
+    <!-- Display previous comments -->
+    <div *ngIf="selectedProject.comments && selectedProject.comments.length">
       <h4>Previous Comments</h4>
       <ul>
         <li *ngFor="let comment of selectedProject.comments">{{ comment }}</li>
@@ -35,16 +52,27 @@
     </div>
   </div>
 
-  <!-- Modal -->
+  <!-- Modal for Adding a New Project -->
   <div class="modal" *ngIf="isModalOpen" (click)="closeModal($event)">
     <div class="modal-content" (click)="$event.stopPropagation()">
       <h3>Add New Project</h3>
       <label for="projectName">Project Name:</label>
       <input type="text" [(ngModel)]="newProjectName" id="projectName" />
+      
       <label for="projectDate">Date:</label>
       <input type="date" [(ngModel)]="newProjectDate" id="projectDate" />
+      
       <label for="projectDescription">Description:</label>
       <textarea [(ngModel)]="newProjectDescription" id="projectDescription"></textarea>
+      
+      <!-- File upload for documents -->
+      <label for="projectFiles">Upload Files:</label>
+      <input type="file" (change)="onFileChange($event)" multiple accept=".pdf,.doc,.docx,.txt,.xls,.xlsx" id="projectFiles" />
+      
+      <!-- Image upload for pictures -->
+      <label for="projectImages">Upload Images:</label>
+      <input type="file" (change)="onImageChange($event)" multiple accept="image/*" id="projectImages" />
+      
       <button (click)="saveProject()">Save Project</button>
       <button (click)="closeModal($event)">Cancel</button>
     </div>
