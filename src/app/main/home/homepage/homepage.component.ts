@@ -1,97 +1,132 @@
 import { Component } from '@angular/core';
 
 @Component({
-  selector: 'app-homepage',
-  templateUrl: './homepage.component.html',
-  styleUrls: ['./homepage.component.css']
+  selector: 'app-homepage', // Component selector used in the template
+  templateUrl: './homepage.component.html', // Path to the HTML template
+  styleUrls: ['./homepage.component.css'] // Path to the CSS stylesheet
 })
 export class HomepageComponent {
-  projects: { name: string; date: string; description: string; comments: string[]; files: File[]; images: File[] }[] = [];
-  selectedProject: { name: string; date: string; description: string; comments: string[]; files: File[]; images: File[] } | null = null;
-  newProjectName = '';
-  newProjectDate = '';
-  newProjectDescription = '';
-  newComment = '';
-  isModalOpen = false;
-  selectedFiles: File[] = [];
-  selectedImages: File[] = [];
-  searchTerm = '';
+  // List of projects
+  projects: { 
+    name: string; 
+    date: string; 
+    description: string; 
+    comments: string[]; 
+    files: File[]; 
+    images: File[] 
+  }[] = [];
 
-  // Method to open the modal for adding a new project
+  // Currently selected project
+  selectedProject: { 
+    name: string; 
+    date: string; 
+    description: string; 
+    comments: string[]; 
+    files: File[]; 
+    images: File[] 
+  } | null = null;
+
+  // Variables for adding a new project
+  newProjectName = ''; // Name of the new project
+  newProjectDate = ''; // Date of the new project
+  newProjectDescription = ''; // Description of the new project
+
+  // Variables for handling comments
+  newComment = ''; // Holds the new comment text
+
+  // Modal control
+  isModalOpen = false; // Tracks if the modal is open
+
+  // Variables for file and image uploads
+  selectedFiles: File[] = []; // Holds uploaded files
+  selectedImages: File[] = []; // Holds uploaded images
+
+  // Variable for search functionality
+  searchTerm = ''; // Holds the search input value
+
+  // Opens the modal for adding a new project
   openAddProjectModal() {
-    this.isModalOpen = true;
+    this.isModalOpen = true; // Set the modal to visible
   }
 
-  // Close the modal
+  // Closes the modal when clicked outside the content area
   closeModal(event: MouseEvent) {
     if (event.target === event.currentTarget) {
-      this.isModalOpen = false;
+      this.isModalOpen = false; // Set the modal to hidden
     }
   }
 
-  // Handle file upload
+  // Handles file uploads for documents
   onFileChange(event: Event) {
     const input = event.target as HTMLInputElement;
     if (input.files) {
-      this.selectedFiles = Array.from(input.files);
+      this.selectedFiles = Array.from(input.files); // Convert FileList to an array
     }
   }
 
-  // Handle image upload
+  // Handles image uploads for pictures
   onImageChange(event: Event) {
     const input = event.target as HTMLInputElement;
     if (input.files) {
-      this.selectedImages = Array.from(input.files);
+      this.selectedImages = Array.from(input.files); // Convert FileList to an array
     }
   }
 
-  // Method to save a new project and display it immediately
+  // Saves a new project and adds it to the project list
   saveProject() {
+    // Ensure all fields are filled
     if (this.newProjectName && this.newProjectDate && this.newProjectDescription) {
       const newProject = {
-        name: this.newProjectName,
-        date: this.newProjectDate,
-        description: this.newProjectDescription,
-        comments: [],
-        files: this.selectedFiles,
-        images: this.selectedImages
+        name: this.newProjectName, // Name of the project
+        date: this.newProjectDate, // Date of the project
+        description: this.newProjectDescription, // Description of the project
+        comments: [], // Initialize with an empty comment array
+        files: this.selectedFiles, // Attach uploaded files
+        images: this.selectedImages // Attach uploaded images
       };
-      
-      // Add the new project to the projects list
+
+      // Add the new project to the list
       this.projects.push(newProject);
-      
-      // Immediately set selectedProject to the new project
+
+      // Automatically select the newly created project
       this.selectedProject = newProject;
 
-      // Reset form fields and close the modal
+      // Clear input fields and close the modal
       this.clearInputFields();
       this.isModalOpen = false;
     } else {
-      alert('Please fill in all fields.');
+      alert('Please fill in all fields.'); // Show an alert if fields are missing
     }
   }
 
-  // Clear the form fields
+  // Clears all form inputs
   clearInputFields() {
-    this.newProjectName = '';
-    this.newProjectDate = '';
-    this.newProjectDescription = '';
-    this.selectedFiles = [];
-    this.selectedImages = [];
+    this.newProjectName = ''; // Reset project name
+    this.newProjectDate = ''; // Reset project date
+    this.newProjectDescription = ''; // Reset project description
+    this.selectedFiles = []; // Clear selected files
+    this.selectedImages = []; // Clear selected images
   }
 
-  // Display selected project details when a project is clicked
-  selectProject(project: { name: string; date: string; description: string; comments: string[]; files: File[]; images: File[] }) {
-    this.selectedProject = project;
+  // Displays the details of a clicked project
+  selectProject(project: { 
+    name: string; 
+    date: string; 
+    description: string; 
+    comments: string[]; 
+    files: File[]; 
+    images: File[] 
+  }) {
+    this.selectedProject = project; // Set the clicked project as selected
   }
 
-  // Add a comment to the currently selected project
+  // Adds a new comment to the selected project
   addComment() {
     if (this.selectedProject && this.newComment.trim()) {
-      this.selectedProject.comments.push(this.newComment);
-      this.newComment = '';
+      this.selectedProject.comments.push(this.newComment); // Add the comment
+      this.newComment = ''; // Clear the input field
     } else {
-      alert('Please enter a comment');
+      alert('Please enter a comment'); // Show an alert if the comment is empty
     }
   }
 }

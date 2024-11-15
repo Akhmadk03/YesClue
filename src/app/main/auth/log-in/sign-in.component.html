@@ -1,38 +1,49 @@
 <div class="main">
   <div class="container">
-    <!-- account details for sign up-->
+    <!-- Sign-Up Form Container -->
     <div class="form-container sign-up-container">
+      <!-- Form for creating an account -->
       <form action="#">
-        <h1>Your Account</h1>
-        <input type="text" placeholder="Name" />
-        <input type="password" placeholder="Password" />
+        <h1>Your Account</h1> <!-- Title for the sign-up form -->
+        <input type="text" placeholder="Name" /> <!-- Input field for user's name -->
+        <input type="password" placeholder="Password" /> <!-- Input field for password -->
         <div class="input-container email-container">
-          <input type="email" placeholder="Email" />
+          <input type="email" placeholder="Email" /> <!-- Input field for email inside a container -->
         </div>
         <button routerLink="/homepage" class="sign-up-btn">Sign in</button>
+        <!-- Button to submit form and navigate to the homepage -->
       </form>
     </div>
-    <!--account details for sign in -->
+
+    <!-- Sign-In Form Container -->
     <div class="form-container sign-in-container">
+      <!-- Form for logging into an account -->
       <form action="#">
-        <input type="email" placeholder="Email" />
-        <input type="password" placeholder="Password" />
-        <button>Sign up</button>
+        <input type="email" placeholder="Email" /> <!-- Input field for email -->
+        <input type="password" placeholder="Password" /> <!-- Input field for password -->
+        <button>Sign up</button> <!-- Button to submit the form -->
       </form>
     </div>
+
+    <!-- Overlay Container -->
     <div class="overlay-container">
       <div class="overlay">
-        <!-- for signed in transform -->
+        <!-- Overlay for switching to Sign-In -->
         <div class="overlay-panel overlay-left">
-          <h1>Welcome Back to YesClue</h1>
+          <h1>Welcome Back to YesClue</h1> <!-- Header for returning users -->
           <p>To keep connected with us, please login with your personal info</p>
+          <!-- Description for the sign-in panel -->
           <button class="ghost" id="signIn">Sign In</button>
+          <!-- Button to switch to the Sign-In form -->
         </div>
-        <!-- for signed up transform -->
+
+        <!-- Overlay for switching to Sign-Up -->
         <div class="overlay-panel overlay-right">
-          <h1>YesClue</h1>
+          <h1>YesClue</h1> <!-- Header for new users -->
           <p>Enter your details and start your journey with us</p>
+          <!-- Description for the sign-up panel -->
           <button class="ghost" id="signUp">Sign Up</button>
+          <!-- Button to switch to the Sign-Up form -->
         </div>
       </div>
     </div>
