@@ -1,132 +1,137 @@
 import { Component } from '@angular/core';
 
 @Component({
-  selector: 'app-homepage', // Component selector used in the template
-  templateUrl: './homepage.component.html', // Path to the HTML template
-  styleUrls: ['./homepage.component.css'] // Path to the CSS stylesheet
+  selector: 'app-homepage', // Defines the selector for the component
+  templateUrl: './homepage.component.html', // Points to the HTML template for this component
+  styleUrls: ['./homepage.component.css'] // Points to the CSS styles for this component
 })
 export class HomepageComponent {
-  // List of projects
+  // Array to store all projects with details such as name, date, description, comments, files, and images
   projects: { 
     name: string; 
     date: string; 
     description: string; 
     comments: string[]; 
-    files: File[]; 
-    images: File[] 
+    files: { name: string; url: string }[]; 
+    images: { name: string; url: string }[] 
   }[] = [];
 
-  // Currently selected project
+  // Stores the currently selected project for detailed view
   selectedProject: { 
     name: string; 
     date: string; 
     description: string; 
     comments: string[]; 
-    files: File[]; 
-    images: File[] 
+    files: { name: string; url: string }[]; 
+    images: { name: string; url: string }[] 
   } | null = null;
 
-  // Variables for adding a new project
+  // Variables for new project creation
   newProjectName = ''; // Name of the new project
   newProjectDate = ''; // Date of the new project
   newProjectDescription = ''; // Description of the new project
 
-  // Variables for handling comments
-  newComment = ''; // Holds the new comment text
+  // Variables for adding comments
+  newComment = ''; // Holds the comment text entered by the user
 
-  // Modal control
-  isModalOpen = false; // Tracks if the modal is open
+  // Controls whether the "Add Project" modal is visible
+  isModalOpen = false;
 
-  // Variables for file and image uploads
-  selectedFiles: File[] = []; // Holds uploaded files
-  selectedImages: File[] = []; // Holds uploaded images
+  // Temporary arrays to store uploaded files and images for the new project
+  selectedFiles: { name: string; url: string }[] = []; // Stores file names and URLs
+  selectedImages: { name: string; url: string }[] = []; // Stores image names and URLs
 
-  // Variable for search functionality
-  searchTerm = ''; // Holds the search input value
+  // Stores the current search term entered in the search bar
+  searchTerm = '';
 
-  // Opens the modal for adding a new project
+  // Opens the "Add Project" modal by setting the modal visibility flag
   openAddProjectModal() {
-    this.isModalOpen = true; // Set the modal to visible
+    this.isModalOpen = true;
   }
 
-  // Closes the modal when clicked outside the content area
+  // Closes the "Add Project" modal when the user clicks outside the modal content
   closeModal(event: MouseEvent) {
     if (event.target === event.currentTarget) {
-      this.isModalOpen = false; // Set the modal to hidden
+      this.isModalOpen = false;
     }
   }
 
-  // Handles file uploads for documents
+  // Handles file uploads by generating object URLs for selected files
   onFileChange(event: Event) {
-    const input = event.target as HTMLInputElement;
+    const input = event.target as HTMLInputElement; // Cast the event target to an input element
     if (input.files) {
-      this.selectedFiles = Array.from(input.files); // Convert FileList to an array
+      this.selectedFiles = Array.from(input.files).map(file => ({
+        name: file.name, // File name
+        url: URL.createObjectURL(file) // Blob URL for the file
+      }));
     }
   }
 
-  // Handles image uploads for pictures
+  // Handles image uploads by generating object URLs for selected images
   onImageChange(event: Event) {
-    const input = event.target as HTMLInputElement;
+    const input = event.target as HTMLInputElement; // Cast the event target to an input element
     if (input.files) {
-      this.selectedImages = Array.from(input.files); // Convert FileList to an array
+      this.selectedImages = Array.from(input.files).map(file => ({
+        name: file.name, // Image name
+        url: URL.createObjectURL(file) // Blob URL for the image
+      }));
     }
   }
 
-  // Saves a new project and adds it to the project list
+  // Saves the new project to the projects array
   saveProject() {
-    // Ensure all fields are filled
+    // Ensure that all required fields are filled
     if (this.newProjectName && this.newProjectDate && this.newProjectDescription) {
       const newProject = {
-        name: this.newProjectName, // Name of the project
-        date: this.newProjectDate, // Date of the project
-        description: this.newProjectDescription, // Description of the project
-        comments: [], // Initialize with an empty comment array
+        name: this.newProjectName, // Name of the new project
+        date: this.newProjectDate, // Date of the new project
+        description: this.newProjectDescription, // Description of the new project
+        comments: [], // Initialize an empty comments array
         files: this.selectedFiles, // Attach uploaded files
         images: this.selectedImages // Attach uploaded images
       };
 
-      // Add the new project to the list
-      this.projects.push(newProject);
-
-      // Automatically select the newly created project
-      this.selectedProject = newProject;
-
-      // Clear input fields and close the modal
-      this.clearInputFields();
-      this.isModalOpen = false;
+      this.projects.push(newProject); // Add the new project to the list
+      this.clearInputFields(); // Reset the form inputs
+      this.isModalOpen = false; // Close the modal
     } else {
-      alert('Please fill in all fields.'); // Show an alert if fields are missing
+      alert('Please fill in all fields.'); // Notify the user if fields are missing
     }
   }
 
-  // Clears all form inputs
+  // Clears all input fields and resets temporary arrays for files and images
   clearInputFields() {
     this.newProjectName = ''; // Reset project name
     this.newProjectDate = ''; // Reset project date
     this.newProjectDescription = ''; // Reset project description
-    this.selectedFiles = []; // Clear selected files
-    this.selectedImages = []; // Clear selected images
+    this.selectedFiles = []; // Clear file selections
+    this.selectedImages = []; // Clear image selections
   }
 
-  // Displays the details of a clicked project
+  // Selects a project for detailed view when clicked
   selectProject(project: { 
     name: string; 
     date: string; 
     description: string; 
     comments: string[]; 
-    files: File[]; 
-    images: File[] 
+    files: { name: string; url: string }[]; 
+    images: { name: string; url: string }[] 
   }) {
-    this.selectedProject = project; // Set the clicked project as selected
+    this.selectedProject = project; // Set the selected project
   }
 
-  // Adds a new comment to the selected project
+  // Deselects the currently selected project and returns to the project list
+  deselectProject() {
+    this.selectedProject = null;
+  }
+
+  // Adds a new comment to the currently selected project
   addComment() {
     if (this.selectedProject && this.newComment.trim()) {
-      this.selectedProject.comments.push(this.newComment); // Add the comment
+      this.selectedProject.comments.push(this.newComment); // Add the comment to the project's comment array
       this.newComment = ''; // Clear the input field
     } else {
-      alert('Please enter a comment'); // Show an alert if the comment is empty
+      alert('Please enter a comment'); // Notify the user if the comment is empty
     }
   }
 }

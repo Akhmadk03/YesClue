@@ -1,35 +1,41 @@
 /* General styles for the body element */
 body {
-  font-family: Arial, sans-serif; /* Default font family */
+  font-family: Arial, sans-serif; /* Sets the font style for the entire page */
   margin: 0; /* Removes default margin */
   padding: 0; /* Removes default padding */
   box-sizing: border-box; /* Ensures padding and borders are included in element dimensions */
-  background-color: #f0f8ff; /* Light blue background */
+  background-color: #f0f8ff; /* Sets a light blue background color */
 }
 
-/* Main container with grid layout */
+/* Main container layout */
 .container {
-  display: grid; /* Defines grid layout */
-  grid-template-columns: 200px 1fr; /* Sidebar is 200px wide, content takes remaining space */
-  grid-template-rows: 50px auto; /* Topbar is 50px tall, main area takes remaining space */
+  display: grid; /* Defines a grid layout */
+  grid-template-columns: 200px 1fr; /* Sidebar is 200px, content takes the remaining space */
+  grid-template-rows: 50px auto; /* Topbar is 50px high, main area takes the rest */
   height: 100vh; /* Full viewport height */
 }
 
 /* Sidebar styles */
 .sidebar {
   grid-column: 1 / 2; /* Occupies the first column */
-  grid-row: 1 / 3; /* Spans both rows (topbar and content area) */
+  grid-row: 1 / 3; /* Spans both rows (topbar and content) */
   background-color: #00264d; /* Dark blue background */
   padding: 20px; /* Inner spacing */
   color: white; /* White text color */
 }
 
-/* Content area (hidden by default) */
-.content {
-  grid-column: 2 / 3; /* Occupies the second column */
-  grid-row: 2 / 3; /* Occupies the content area below the topbar */
-  padding: 20px; /* Inner spacing */
-  display: none; /* Initially hidden, shown when a project is clicked */
+.sidebar ul {
+  list-style: none; /* Removes bullet points from the list */
+  padding: 0; /* Removes default padding */
+}
+
+.sidebar ul li {
+  margin: 10px 0; /* Adds vertical spacing between list items */
+  cursor: pointer; /* Changes the cursor to a pointer on hover */
+}
+
+.sidebar ul li:hover {
+  text-decoration: underline; /* Underlines the text on hover */
 }
 
 /* Topbar styles */
@@ -38,70 +44,84 @@ body {
   grid-row: 1 / 2; /* Occupies the first row */
   background-color: #000; /* Black background */
   color: white; /* White text color */
-  display: flex; /* Flex layout for horizontal alignment */
+  padding: 10px 20px; /* Inner spacing */
+  display: flex; /* Flexbox layout for horizontal alignment */
   justify-content: space-between; /* Space between elements */
-  align-items: center; /* Vertically centers items */
-  padding: 0 20px; /* Horizontal padding */
 }
 
-/* Topbar button styles */
+/* Button styles in the topbar */
 .topbar button {
   background-color: #00509e; /* Blue background */
-  color: white; /* White text */
-  border: none; /* Removes border */
-  padding: 10px 20px; /* Button padding */
-  cursor: pointer; /* Changes cursor to pointer on hover */
+  color: white; /* White text color */
+  border: none; /* Removes the border */
+  padding: 10px; /* Padding inside the button */
+  cursor: pointer; /* Changes the cursor to a pointer on hover */
   border-radius: 5px; /* Rounded corners */
 }
 
-/* Topbar button hover effect */
 .topbar button:hover {
   background-color: #003f7f; /* Darker blue background on hover */
 }
 
-/* Sidebar list styles */
-.sidebar ul {
-  list-style-type: none; /* Removes default bullet points */
-  padding: 0; /* Removes default padding */
+/* Main content area */
+.content {
+  grid-column: 2 / 3; /* Occupies the second column */
+  grid-row: 2 / 3; /* Occupies the content area below the topbar */
+  padding: 20px; /* Inner spacing */
+  background-color: white; /* White background for contrast */
+  border: 1px solid #ddd; /* Light border around the content area */
+  border-radius: 5px; /* Rounded corners */
+  overflow-y: auto; /* Enables vertical scrolling if content overflows */
 }
 
-/* Sidebar list item styles */
-.sidebar ul li {
-  margin: 10px 0; /* Vertical spacing between items */
-  font-size: 18px; /* Font size */
-  cursor: pointer; /* Changes cursor to pointer on hover */
-}
-
-/* Sidebar list item hover effect */
-.sidebar ul li:hover {
-  text-decoration: underline; /* Underlines text on hover */
-}
-
-/* Search bar container */
-.search-bar {
-  display: flex; /* Centers the search bar horizontally */
-  justify-content: center; /* Aligns search bar in the center */
-  margin-top: 20px; /* Adds space above the search bar */
-}
-
-/* Search bar input field */
-.search-bar input {
-  width: 50%; /* Occupies half the width of the parent */
-  padding: 10px; /* Inner spacing */
-  font-size: 16px; /* Font size */
-  border: 1px solid #00509e; /* Blue border */
+/* Back button styles */
+.back-button {
+  margin-bottom: 20px; /* Adds spacing below the button */
+  background-color: #00509e; /* Blue background */
+  color: white; /* White text */
+  border: none; /* Removes border */
+  padding: 10px 20px; /* Inner spacing */
+  cursor: pointer; /* Pointer cursor for interactivity */
   border-radius: 5px; /* Rounded corners */
 }
 
-/* Modal styles (hidden by default) */
+.back-button:hover {
+  background-color: #003f7f; /* Darker blue background on hover */
+}
+
+/* Image gallery styles */
+.image-gallery {
+  display: flex; /* Aligns images in a row */
+  gap: 10px; /* Adds spacing between images */
+  margin-top: 10px; /* Adds spacing above the gallery */
+}
+
+.image-gallery img {
+  max-width: 150px; /* Maximum width for images */
+  max-height: 150px; /* Maximum height for images */
+  border: 1px solid #ddd; /* Light border around images */
+  border-radius: 5px; /* Rounded corners for images */
+}
+
+/* Links inside the content area */
+.content ul li a {
+  color: #00509e; /* Blue text color for links */
+  text-decoration: none; /* Removes underline */
+}
+
+.content ul li a:hover {
+  text-decoration: underline; /* Adds underline on hover */
+}
+
+/* Modal styles for "Add Project" */
 .modal {
-  position: fixed; /* Fixed position relative to the viewport */
+  position: fixed; /* Fixes the modal relative to the viewport */
   top: 0; /* Aligns modal to the top */
   left: 0; /* Aligns modal to the left */
-  width: 100%; /* Full width of the viewport */
-  height: 100%; /* Full height of the viewport */
+  width: 100%; /* Full viewport width */
+  height: 100%; /* Full viewport height */
   background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent black background */
-  display: flex; /* Centers modal content */
+  display: flex; /* Centers modal content horizontally and vertically */
   justify-content: center; /* Centers horizontally */
   align-items: center; /* Centers vertically */
 }
@@ -111,32 +131,43 @@ body {
   background-color: white; /* White background */
   padding: 20px; /* Inner spacing */
   border-radius: 5px; /* Rounded corners */
-  width: 300px; /* Fixed width for modal */
-  border: 1px solid #00509e; /* Blue border */
+  width: 400px; /* Fixed width */
 }
 
-/* Modal input and textarea fields */
-.modal-content input,
-.modal-content textarea {
-  width: 100%; /* Full width of the modal content */
-  margin: 10px 0; /* Vertical spacing between fields */
+/* Form group styles for modal inputs */
+.form-group {
+  margin-bottom: 15px; /* Adds spacing between form elements */
+}
+
+.form-group label {
+  display: block; /* Forces label to appear on its own line */
+  font-weight: bold; /* Makes the label text bold */
+  margin-bottom: 5px; /* Adds spacing below the label */
+}
+
+.form-group input,
+.form-group textarea {
+  width: 100%; /* Full width of the parent container */
   padding: 10px; /* Inner spacing */
-  font-size: 14px; /* Font size */
-  border: 1px solid #00509e; /* Blue border */
+  border: 1px solid #ddd; /* Light border */
   border-radius: 5px; /* Rounded corners */
 }
 
-/* Modal buttons */
-.modal-content button {
+/* Modal action buttons */
+.modal-buttons {
+  display: flex; /* Align buttons horizontally */
+  justify-content: space-between; /* Adds space between buttons */
+}
+
+.modal-buttons button {
   background-color: #00509e; /* Blue background */
   color: white; /* White text */
-  padding: 10px; /* Inner spacing */
   border: none; /* Removes border */
+  padding: 10px; /* Inner spacing */
   border-radius: 5px; /* Rounded corners */
-  cursor: pointer; /* Changes cursor to pointer on hover */
+  cursor: pointer; /* Pointer cursor for interactivity */
 }
 
-/* Modal button hover effect */
-.modal-content button:hover {
+.modal-buttons button:hover {
   background-color: #003f7f; /* Darker blue background on hover */
 }

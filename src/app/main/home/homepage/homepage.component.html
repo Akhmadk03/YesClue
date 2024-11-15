@@ -2,10 +2,10 @@
   <!-- Sidebar containing the project list -->
   <div class="sidebar">
     <ul id="projectList">
-      <li><strong>My Projects</strong></li> <!-- Header for the project list -->
+      <li><strong>My Projects</strong></li>
       <!-- Dynamically generates a list of projects using Angular's *ngFor directive -->
       <li *ngFor="let project of projects" (click)="selectProject(project)">
-        {{ project.name }} <!-- Displays the name of each project -->
+        {{ project.name }}
       </li>
     </ul>
   </div>
@@ -19,7 +19,7 @@
         id="searchInput" 
         placeholder="Search Projects..." 
         [(ngModel)]="searchTerm" 
-      /> <!-- Binds the input value to the "searchTerm" variable -->
+      />
     </div>
     <!-- Button to open the "Add Project" modal -->
     <button id="addProjectBtn" (click)="openAddProjectModal()">Add Project</button>
@@ -27,28 +27,41 @@
   
   <!-- Content section for displaying selected project details -->
   <div class="content" *ngIf="selectedProject">
-    <h2>{{ selectedProject.name }}</h2> <!-- Project name -->
-    <p><strong>Date:</strong> {{ selectedProject.date }}</p> <!-- Project date -->
-    <p><strong>Description:</strong> {{ selectedProject.description }}</p> <!-- Project description -->
+    <!-- Back button to navigate to the project list -->
+    <button class="back-button" (click)="deselectProject()">Back to Projects</button>
     
+    <h2>{{ selectedProject.name }}</h2>
+    <p><strong>Date:</strong> {{ selectedProject.date }}</p>
+    <p><strong>Description:</strong> {{ selectedProject.description }}</p>
+
     <!-- Section for displaying uploaded files -->
     <div *ngIf="selectedProject.files && selectedProject.files.length">
       <h4>Files</h4>
       <ul>
-        <!-- Loop through and display each uploaded file -->
-        <li *ngFor="let file of selectedProject.files">{{ file.name }}</li>
+        <li *ngFor="let file of selectedProject.files">
+          <a 
+            [href]="file.url" 
+            target="_blank" 
+            rel="noopener noreferrer">
+            {{ file.name }}
+          </a>
+        </li>
       </ul>
     </div>
     
     <!-- Section for displaying uploaded images -->
     <div *ngIf="selectedProject.images && selectedProject.images.length">
       <h4>Images</h4>
-      <ul>
-        <!-- Loop through and display each uploaded image -->
-        <li *ngFor="let image of selectedProject.images">{{ image.name }}</li>
-      </ul>
+      <div class="image-gallery">
+        <img 
+          *ngFor="let image of selectedProject.images" 
+          [src]="image.url" 
+          [alt]="image.name" 
+          class="project-image" 
+        />
+      </div>
     </div>
-    
+
     <!-- Comment section for adding and viewing comments -->
     <div class="comment-section">
       <h3>Comments</h3>
@@ -57,15 +70,14 @@
         placeholder="Add your comment..." 
         rows="4" 
         cols="50">
-      </textarea> <!-- Binds the comment input to the "newComment" variable -->
-      <button (click)="addComment()">Add Comment</button> <!-- Adds a new comment -->
+      </textarea>
+      <button (click)="addComment()">Add Comment</button>
     </div>
-    
+
     <!-- Displays previous comments -->
     <div *ngIf="selectedProject.comments && selectedProject.comments.length">
       <h4>Previous Comments</h4>
       <ul>
-        <!-- Loop through and display each comment -->
         <li *ngFor="let comment of selectedProject.comments">{{ comment }}</li>
       </ul>
     </div>
@@ -73,44 +85,52 @@
 
   <!-- Modal for adding a new project -->
   <div class="modal" *ngIf="isModalOpen" (click)="closeModal($event)">
-    <div class="modal-content" (click)="$event.stopPropagation()"> <!-- Stops event propagation to avoid closing modal -->
+    <div class="modal-content" (click)="$event.stopPropagation()">
       <h3>Add New Project</h3>
       
-      <!-- Input for project name -->
-      <label for="projectName">Project Name:</label>
-      <input type="text" [(ngModel)]="newProjectName" id="projectName" />
+      <!-- Updated form layout -->
+      <div class="form-group">
+        <label for="projectName">Project Name:</label>
+        <input type="text" [(ngModel)]="newProjectName" id="projectName" />
+      </div>
+
+      <div class="form-group">
+        <label for="projectDate">Date:</label>
+        <input type="date" [(ngModel)]="newProjectDate" id="projectDate" />
+      </div>
       
-      <!-- Input for project date -->
-      <label for="projectDate">Date:</label>
-      <input type="date" [(ngModel)]="newProjectDate" id="projectDate" />
+      <div class="form-group">
+        <label for="projectDescription">Description:</label>
+        <textarea [(ngModel)]="newProjectDescription" id="projectDescription"></textarea>
+      </div>
       
-      <!-- Textarea for project description -->
-      <label for="projectDescription">Description:</label>
-      <textarea [(ngModel)]="newProjectDescription" id="projectDescription"></textarea>
+      <div class="form-group">
+        <label for="projectFiles">Upload Files:</label>
+        <input 
+          type="file" 
+          (change)="onFileChange($event)" 
+          multiple 
+          accept=".pdf,.doc,.docx,.txt,.xls,.xlsx" 
+          id="projectFiles" 
+        />
+      </div>
       
-      <!-- File upload for documents -->
-      <label for="projectFiles">Upload Files:</label>
-      <input 
-        type="file" 
-        (change)="onFileChange($event)" 
-        multiple 
-        accept=".pdf,.doc,.docx,.txt,.xls,.xlsx" 
-        id="projectFiles" 
-      />
-      
-      <!-- Image upload for pictures -->
-      <label for="projectImages">Upload Images:</label>
-      <input 
-        type="file" 
-        (change)="onImageChange($event)" 
-        multiple 
-        accept="image/*" 
-        id="projectImages" 
-      />
+      <div class="form-group">
+        <label for="projectImages">Upload Images:</label>
+        <input 
+          type="file" 
+          (change)="onImageChange($event)" 
+          multiple 
+          accept="image/*" 
+          id="projectImages" 
+        />
+      </div>
       
       <!-- Modal action buttons -->
-      <button (click)="saveProject()">Save Project</button> <!-- Saves the new project -->
-      <button (click)="closeModal($event)">Cancel</button> <!-- Closes the modal -->
+      <div class="modal-buttons">
+        <button (click)="saveProject()">Save</button>
+        <button (click)="closeModal($event)">Cancel</button>
+      </div>
     </div>
   </div>
 </div>
