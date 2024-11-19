@@ -18,11 +18,11 @@ app.get('/', (req, res) => {
 });
 
 // API Routes
-app.use('/api/auth', require('./routes/api/auth')); // Auth routes for sign-up/sign-in
+app.use('/api/auth', require('./routes/api/Auth')); // Auth routes for sign-up/sign-in
 app.use('/api/projects', require('./routes/api/projects')); // Project routes
 
 // Start the server
-app.listen(PORT, () => {
-  console.log(`Server is running on http://localhost:${PORT}`);
-  db.connect(); // Initialize the MongoDB connection
+app.listen(PORT, '0.0.0.0', () => {
+    console.log(`Server is running on http://0.0.0.0:${PORT}`);
 });
+
