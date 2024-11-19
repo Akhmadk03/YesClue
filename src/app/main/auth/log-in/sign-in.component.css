@@ -1,285 +1,51 @@
-/* Centers content in the viewport both vertically and horizontally */
 .main {
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 100vh; /* Full viewport height */
-    width: 100vw;  /* Full viewport width */
-}
-
-/* Ensures padding and border are included in the element's dimensions */
-* {
-    box-sizing: border-box;
-}
-
-/* Styles the body with a gradient background and centers the content */
-body {
-    background: linear-gradient(rgb(238, 191, 191), rgb(193, 193, 243)); /* Gradient background */
+    height: 100vh;
+    background-color: #f6f5f7;
+  }
+  
+  .container {
     display: flex;
-    flex-direction: column; /* Stacks content vertically */
-    align-items: center; /* Centers horizontally */
-    justify-content: center; /* Centers vertically */
-    height: 100vh; /* Full viewport height */
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; /* Font settings */
-    overflow: hidden; /* Prevents scrolling */
-}
-
-/* Main container with shadow, rounded corners, and responsive size */
-.container {
-    background: #fff; /* White background */
-    border-radius: 10px; /* Rounded corners */
-    box-shadow: 10px 10px 20px rgb(77, 75, 75); /* Drop shadow */
-    overflow: hidden; /* Hides overflow */
-    position: relative;
-    width: 100%; /* Takes full width of the viewport */
-    max-width: 768px; /* Max width for larger screens */
-    min-height: 480px; /* Minimum height */
-}
-
-/* General settings for form containers */
-.form-container {
-    position: absolute;
-    top: 0; /* Sticks to the top of the parent container */
-    height: 100%; /* Full height */
-    transition: all 0.6s ease-in-out; /* Smooth transitions */
-}
-
-/* Specific settings for the sign-up container */
-.sign-up-container {
-    left: 0; /* Positioned on the left */
-    width: 50%; /* Takes up half the container */
-    z-index: 2; /* Higher stacking order */
-}
-
-/* Specific settings for the sign-in container */
-.sign-in-container {
-    left: 0; /* Positioned on the left */
-    width: 50%; /* Takes up half the container */
-    opacity: 0.95; /* Slight transparency */
-    z-index: 1; /* Lower stacking order */
-}
-
-/* Hover effects for sign-up button */
-.sign-up-btn:hover {
-    box-shadow: 2px 2px 8px rgb(59, 58, 58); /* Adds shadow on hover */
-}
-
-/* Hover effects for sign-in and sign-up links */
-#signIn:hover,
-#signUp:hover {
-    box-shadow: 1px 1px 6px rgb(51, 50, 50); /* Adds subtle shadow */
-    background: white; /* Changes background to white */
-    border: none;
-    border-radius: 2.5px; /* Slightly rounded corners */
-}
-
-/* Active state for the container, adjusts panels for animation */
-.container.right-panel-active .sign-up-container {
-    transform: translateX(100%); /* Moves the sign-up form off-screen */
-}
-
-.container.right-panel-active .sign-in-container {
-    transform: translateX(100%); /* Moves the sign-in form off-screen */
-    opacity: 0.5; /* Makes it more transparent */
-    pointer-events: none; /* Disables interactions */
-}
-
-/* Overlay container settings */
-.overlay-container {
-    position: absolute;
-    top: 0;
-    left: 50%; /* Starts at the middle of the container */
-    width: 50%; /* Takes up half the container width */
-    height: 100%; /* Full height */
-    overflow: hidden; /* Hides overflow */
-    transition: transform 0.6s ease-in-out; /* Smooth transition */
-    z-index: 100; /* High stacking order for visibility */
-}
-
-/* Adjusts overlay container during active state */
-.container.right-panel-active .overlay-container {
-    transform: translateX(-100%); /* Moves overlay to the left */
-}
-
-/* Overlay background and animations */
-.overlay {
-    background: #0670f1; /* Blue background */
-    background-repeat: no-repeat;
-    background-size: cover; /* Covers entire area */
-    background-position: 0 0;
-    color: #ffffff; /* White text color */
-    position: relative;
-    left: -100%; /* Positioned outside the container */
-    height: 100%; /* Full height */
-    width: 200%; /* Double the width for sliding effect */
-    transform: translateX(0); /* Starts at normal position */
-    transition: transform 0.6s ease-in-out; /* Smooth transition */
-}
-
-/* Adjust overlay during active state */
-.container.right-panel-active .overlay {
-    transform: translateX(50%); /* Slides overlay to the right */
-}
-
-/* Styling for overlay panels */
-.overlay-panel {
-    position: absolute;
-    display: flex; /* Flexbox for centering */
-    align-items: center; /* Centers vertically */
-    justify-content: center; /* Centers horizontally */
-    flex-direction: column; /* Stacks content */
-    padding: 0 40px;
-    text-align: center;
-    top: 0;
-    height: 100%; /* Full height */
-    width: 50%; /* Half the overlay width */
-    transform: translateX(0); /* Starts at normal position */
-    transition: transform 0.6s ease-in-out; /* Smooth transition */
-}
-
-/* Adjusts overlay left panel */
-.overlay-left {
-    transform: translateX(-20%); /* Starts slightly off-screen */
-}
-
-/* Adjusts overlay left panel during active state */
-.container.right-panel-active .overlay-left {
-    transform: translateX(0); /* Moves to normal position */
-}
-
-/* Adjusts overlay right panel */
-.overlay-right {
-    right: 0;
-    transform: translateX(0); /* Normal position */
-}
-
-/* Adjusts overlay right panel during active state */
-.container.right-panel-active .overlay-right {
-    transform: translateX(20%); /* Slides off-screen */
-}
-
-/* Social media icon container */
-.social-container {
-    margin: 20px 0;
-}
-
-.social-container a {
-    border: 1px solid #dddddd; /* Light border */
-    border-radius: 50%; /* Circular icons */
-    display: inline-flex;
-    justify-content: center; /* Centers icon horizontally */
-    align-items: center; /* Centers icon vertically */
-    margin: 0 5px;
-    height: 40px;
-    width: 40px;
-}
-
-/* Styling for form elements */
-.form-container form {
-    background: #ffffff;
+    width: 500px;
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  .form-container {
     display: flex;
     flex-direction: column;
-    padding: 0 50px;
-    height: 100%;
-    justify-content: center; /* Centers content vertically */
-    align-items: center;
-    text-align: center;
-}
-
-/* Form title styling */
-.form-container h1 {
-    font-size: 28px; /* Large font size */
-    margin-bottom: 20px;
-}
-
-/* Input field styling */
-.form-container input {
-    background: #eeeef1; /* Light gray background */
-    border: none;
-    border-radius: 5px; /* Rounded corners */
-    padding: 12px 15px;
-    margin: 8px 0; /* Spacing between fields */
-    width: 100%; /* Full width */
-}
-
-/* Button styling */
-.form-container button {
-    border-radius: 5px; /* Rounded corners */
-    border: none;
-    background: #4CAF50; /* Green background */
-    color: #ffffff; /* White text */
-    text-transform: uppercase; /* Uppercase text */
-    font-size: 15px;
-    padding: 15px;
     width: 100%;
-    cursor: pointer; /* Pointer cursor */
-}
-
-/* Button hover effect */
-.form-container button:hover {
-    background: #45a049; /* Darker green */
-    outline: none;
-}
-
-/* Links inside forms */
-.form-container a {
-    color: #ffffff;
-    font-size: 14px;
-    text-decoration: none; /* Removes underline */
+    margin: 20px 0;
+  }
+  
+  input {
+    width: 100%;
+    margin: 10px 0;
+    padding: 10px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+  }
+  
+  button {
     margin-top: 10px;
-}
-
-/* Ghost button styling */
-.form-container .ghost {
-    background: transparent; /* Transparent background */
-    border: 1px solid #ffffff; /* White border */
-    color: #ffffff; /* White text */
-}
-
-/* Input container hidden by default */
-.input-container {
-    display: none; /* Hidden initially */
-    width: 285px;
-}
-
-/* Displays input container when active */
-.sign-up-container.active .input-container {
-    display: block;
-}
-
-/* Responsive styles for smaller screens */
-@media (max-width: 768px) {
-    .container {
-        min-height: 700px; /* Increased minimum height */
-        height: auto; /* Adjusts height automatically */
-        border-radius: 0; /* Removes rounded corners */
-        overflow: hidden;
-    }
-
-    .form-container {
-        width: 100%; /* Full width */
-        left: 0; /* Aligns to the left */
-    }
-
-    .overlay-container {
-        width: 100%; /* Full width */
-        left: 0; /* Aligns to the left */
-        transform: translateX(0); /* No sliding */
-    }
-
-    .overlay {
-        width: 100%; /* Full width */
-        left: 0; /* Aligns to the left */
-        transform: translateX(0); /* No sliding */
-    }
-
-    .overlay-left,
-    .overlay-right {
-        transform: translateY(-20%); /* Slight vertical offset */
-    }
-
-    .container.right-panel-active .overlay-left,
-    .container.right-panel-active .overlay-right {
-        transform: translateY(0); /* Centers vertically */
-    }
-}
+    padding: 10px;
+    background-color: #28a745;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+  
+  .switch-to-signup-btn,
+  .switch-to-signin-btn {
+    margin-top: 10px;
+    padding: 10px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+  

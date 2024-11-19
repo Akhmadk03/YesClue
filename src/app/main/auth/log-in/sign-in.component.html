@@ -1,51 +1,26 @@
 <div class="main">
   <div class="container">
-    <!-- Sign-Up Form Container -->
+    <!-- Sign-Up Form -->
     <div class="form-container sign-up-container">
-      <!-- Form for creating an account -->
-      <form action="#">
-        <h1>Your Account</h1> <!-- Title for the sign-up form -->
-        <input type="text" placeholder="Name" /> <!-- Input field for user's name -->
-        <input type="password" placeholder="Password" /> <!-- Input field for password -->
-        <div class="input-container email-container">
-          <input type="email" placeholder="Email" /> <!-- Input field for email inside a container -->
-        </div>
-        <button routerLink="/homepage" class="sign-up-btn">Sign in</button>
-        <!-- Button to submit form and navigate to the homepage -->
+      <form>
+        <input type="text" placeholder="Name" [(ngModel)]="name" name="name" required />
+        <input type="email" placeholder="Email" [(ngModel)]="email" name="email" required />
+        <input type="password" placeholder="Password" [(ngModel)]="password" name="password" required />
+        <input type="text" placeholder="Institution" [(ngModel)]="institution" name="institution" />
+        <input type="text" placeholder="Field of Study" [(ngModel)]="fieldOfStudy" name="fieldOfStudy" />
+        <button type="button" class="sign-up-btn" (click)="createAccount()">Create Account</button>
       </form>
+      <button class="switch-to-signin-btn" (click)="toggleForm()">Switch to Sign In</button>
     </div>
 
-    <!-- Sign-In Form Container -->
-    <div class="form-container sign-in-container">
-      <!-- Form for logging into an account -->
-      <form action="#">
-        <input type="email" placeholder="Email" /> <!-- Input field for email -->
-        <input type="password" placeholder="Password" /> <!-- Input field for password -->
-        <button>Sign up</button> <!-- Button to submit the form -->
+    <!-- Sign-In Form -->
+    <div class="form-container sign-in-container" *ngIf="isSignIn">
+      <form>
+        <input type="email" placeholder="Email" [(ngModel)]="email" name="email" required />
+        <input type="password" placeholder="Password" [(ngModel)]="password" name="password" required />
+        <button type="button" (click)="signIn()">Sign In</button>
       </form>
-    </div>
-
-    <!-- Overlay Container -->
-    <div class="overlay-container">
-      <div class="overlay">
-        <!-- Overlay for switching to Sign-In -->
-        <div class="overlay-panel overlay-left">
-          <h1>Welcome Back to YesClue</h1> <!-- Header for returning users -->
-          <p>To keep connected with us, please login with your personal info</p>
-          <!-- Description for the sign-in panel -->
-          <button class="ghost" id="signIn">Sign In</button>
-          <!-- Button to switch to the Sign-In form -->
-        </div>
-
-        <!-- Overlay for switching to Sign-Up -->
-        <div class="overlay-panel overlay-right">
-          <h1>YesClue</h1> <!-- Header for new users -->
-          <p>Enter your details and start your journey with us</p>
-          <!-- Description for the sign-up panel -->
-          <button class="ghost" id="signUp">Sign Up</button>
-          <!-- Button to switch to the Sign-Up form -->
-        </div>
-      </div>
+      <button class="switch-to-signup-btn" (click)="toggleForm()">Switch to Sign Up</button>
     </div>
   </div>
 </div>

@@ -1,27 +1,27 @@
 import { NgModule } from '@angular/core';
-import { BrowserModule, provideClientHydration } from '@angular/platform-browser';
+import { BrowserModule } from '@angular/platform-browser';
+import { FormsModule } from '@angular/forms';
+import { HttpClientModule } from '@angular/common/http'; // Required for HttpClient
+import { provideHttpClient, withFetch } from '@angular/common/http'; // Import for fetch support
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { LoginSignupComponent } from './main/auth/log-in/sign-in.component';
-import { HomepageComponent } from './main/home/homepage/homepage.component'; // Adjust path as necessary
-import { FormsModule } from '@angular/forms';
+import { HomepageComponent } from './main/home/homepage/homepage.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     LoginSignupComponent,
-    HomepageComponent
+    HomepageComponent,
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
-    FormsModule
+    FormsModule,
+    HttpClientModule, // Import HttpClientModule here
   ],
-  providers: [
-    provideClientHydration()
-  ],
-  bootstrap: [AppComponent]
+  providers: [provideHttpClient(withFetch())], // Add fetch support here
+  bootstrap: [AppComponent],
 })
-export class AppModule { }
-
+export class AppModule {}
