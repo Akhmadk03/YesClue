@@ -6,17 +6,17 @@ import { Observable } from 'rxjs';
   providedIn: 'root', // Register service globally
 })
 export class ProjectService {
-  private apiUrl = 'http://localhost:5003/api/projects'; // Backend API URL
+  private baseUrl = 'http://165.227.83.112:5003/api/projects'; // Backend URL
 
   constructor(private http: HttpClient) {}
 
   // Fetch all projects
   getProjects(): Observable<any> {
-    return this.http.get(this.apiUrl);
+    return this.http.get(this.baseUrl);
   }
 
   // Add a new project
   addProject(project: any): Observable<any> {
-    return this.http.post(this.apiUrl, project);
+    return this.http.post(this.baseUrl, project);
   }
 }

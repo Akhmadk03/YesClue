@@ -3,19 +3,18 @@ import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 
 @Injectable({
-  providedIn: 'root', // This ensures the service is a singleton
+  providedIn: 'root',
 })
 export class AuthService {
-  private apiUrl = 'http://localhost:5003/api/auth'; // Backend API URL
+  private baseUrl = 'http://165.227.83.112:5003/api/auth'; // Backend IP and route
 
   constructor(private http: HttpClient) {}
 
-  // Method to fetch the current logged-in user
-  getCurrentUser(): Observable<any> {
-    return this.http.get(`${this.apiUrl}/current-user`, {
-      headers: {
-        Authorization: `Bearer ${localStorage.getItem('token')}`,
-      },
-    });
+  signup(data: any): Observable<any> {
+    return this.http.post(`${this.baseUrl}/signup`, data);
+  }
+
+  login(data: any): Observable<any> {
+    return this.http.post(`${this.baseUrl}/login`, data);
   }
 }

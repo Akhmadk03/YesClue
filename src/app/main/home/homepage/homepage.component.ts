@@ -18,7 +18,7 @@ export class HomepageComponent implements OnInit {
   searchTerm = '';
   newComment: string = ''; // Stores new comments
 
-  private apiUrl = 'http://localhost:5003/api/projects'; // Backend API URL
+  private apiUrl = 'http://165.227.83.112:5003/api/projects'; // Backend API URL
 
   constructor(private http: HttpClient) {}
 

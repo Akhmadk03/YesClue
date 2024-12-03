@@ -30,7 +30,7 @@ export class LoginSignupComponent {
       fieldOfStudy: this.fieldOfStudy,
     };
 
-    this.http.post('http://localhost:5003/api/auth/signup', userData).subscribe(
+    this.http.post('http://165.227.83.112:5003/api/auth/signup', userData).subscribe(
       (response: any) => {
         alert('Account created successfully!');
         console.log(response);
@@ -47,7 +47,7 @@ export class LoginSignupComponent {
       password: this.password,
     };
 
-    this.http.post('http://localhost:5003/api/auth/signin', userData).subscribe(
+    this.http.post('http://165.227.83.112:5003/api/auth/login', userData).subscribe(
       (response: any) => {
         alert('Sign in successful!');
         console.log('User details:', response.user);

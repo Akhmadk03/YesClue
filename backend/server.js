@@ -1,28 +1,23 @@
-require('dotenv').config();
 const express = require('express');
-const cors = require('cors');
 const bodyParser = require('body-parser');
-const db = require('./db'); // MongoDB connection setup
+const cors = require('cors');
+const mongoose = require('mongoose');
 
 const app = express();
-const PORT = process.env.PORT || 5003;
 
 // Middleware
-app.use(cors()); // Enable Cross-Origin Resource Sharing
-app.use(bodyParser.json()); // Parse JSON requests
-app.use(bodyParser.urlencoded({ extended: true })); // Parse URL-encoded requests
+app.use(cors());
+app.use(bodyParser.json());
 
-// Test route
-app.get('/', (req, res) => {
-  res.send('Server is running...');
-});
+// MongoDB connection
+mongoose
+  .connect('your_mongo_connection_string_here', { useNewUrlParser: true, useUnifiedTopology: true })
+  .then(() => console.log('✅ Connected to MongoDB'))
+  .catch((err) => console.error('❌ Error connecting to MongoDB:', err));
 
-// API Routes
-app.use('/api/auth', require('./routes/api/Auth')); // Auth routes for sign-up/sign-in
-app.use('/api/projects', require('./routes/api/projects')); // Project routes
+// Routes
+app.use('/api/auth', require('./routes/api/Auth')); // Ensure correct casing here
 
-// Start the server
-app.listen(PORT, '0.0.0.0', () => {
-    console.log(`Server is running on http://0.0.0.0:${PORT}`);
-});
-
+// Start server
+const PORT = process.env.PORT || 5003;
+app.listen(PORT, () => console.log(`Server is running on http://0.0.0.0:${PORT}`));
