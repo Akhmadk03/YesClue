@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
+import { HttpHeaders } from '@angular/common/http';
 
 @Component({
   selector: 'app-homepage',
@@ -62,12 +63,14 @@ export class HomepageComponent implements OnInit {
       return;
     }
 
-    const currentUser = 'John Doe'; // Replace with actual logged-in user info
+    // Retrieve the current logged-in user dynamically (assuming it is stored after login)
+    const currentUser = localStorage.getItem('currentUser'); // Or use a service to get this info
+
     const projectData = {
       name: this.newProjectName,
       date: this.newProjectDate,
       description: this.newProjectDescription,
-      createdBy: currentUser, // Add the logged-in user's name
+      createdBy: currentUser,  // Dynamically set the logged-in user's name
       files: this.selectedFiles.map(file => ({
         name: file.name,
         url: URL.createObjectURL(file),
@@ -78,19 +81,22 @@ export class HomepageComponent implements OnInit {
       })),
     };
 
-    this.http.post(this.apiUrl, projectData).subscribe(
-      (response: any) => {
-        alert('Project added successfully!');
-        this.projects.push(response.project); // Add the project to the UI
-        this.clearInputs();
-        this.isModalOpen = false;
-      },
-      (error) => {
-        console.error(error);
-        alert('An error occurred while saving the project.');
-      }
-    );
-  }
+    // Send the project data to the backend API
+    this.http.post(this.apiUrl, projectData, { headers: new HttpHeaders().set('Authorization', `Bearer ${localStorage.getItem('token')}`) })
+      .subscribe(
+        (response: any) => {
+          alert('Project added successfully!');
+          this.projects.push(response.project); // Add the project to the UI
+          this.clearInputs();
+          this.isModalOpen = false;
+        },
+        (error) => {
+          console.error(error);
+          alert('An error occurred while saving the project.');
+        }
+      );
+}
+
 
   clearInputs() {
     this.newProjectName = '';

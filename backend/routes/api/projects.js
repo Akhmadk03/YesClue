@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const Project = require('../../models/Project');
+const authMiddleware = require('../../middleware/auth');
 
 // Get all projects
 router.get('/', (req, res) => {
@@ -10,21 +11,21 @@ router.get('/', (req, res) => {
 });
 
 // Create a new project
-router.post('/', (req, res) => {
-  const { name, date, description, createdBy, files, images } = req.body;
-
-  const newProject = new Project({
-    name,
-    date,
-    description,
-    createdBy,
-    files,
-    images,
+router.post('/', authMiddleware, (req, res) => {
+    const { name, date, description, files, images } = req.body;
+    
+    const newProject = new Project({
+      name,
+      date,
+      description,
+      createdBy: req.user.name,  // Use the user data from the JWT (authenticated user)
+      files,
+      images,
+    });
+  
+    newProject.save()
+      .then(project => res.status(201).json({ project }))
+      .catch(err => res.status(500).json({ error: err.message }));
   });
-
-  newProject.save()
-    .then(project => res.status(201).json({ project }))
-    .catch(err => res.status(500).json({ error: err.message }));
-});
 
 module.exports = router;

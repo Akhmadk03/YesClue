@@ -6,6 +6,6 @@ const UserSchema = new mongoose.Schema({
   password: { type: String, required: true },
   institution: { type: String },
   fieldOfStudy: { type: String },
-}, { timestamps: true });
+});
 
 module.exports = mongoose.model('User', UserSchema);
